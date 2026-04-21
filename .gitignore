@@ -1,0 +1,20 @@
+cat > .gitignore << 'EOF'
+# Terraform - ASLA commit etme
+**/.terraform/
+*.tfstate
+*.tfstate.backup
+*.tfstate.lock.info
+terraform.tfvars
+*.tfvars
+override.tf
+.terraform.lock.hcl
+
+# Ansible
+*.retry
+ansible/vault/secrets.yml
+
+# Genel
+.env
+*.pem
+*.key
+EOF
