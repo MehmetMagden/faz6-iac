@@ -17,4 +17,4 @@ ansible/vault/secrets.yml
 .env
 *.pem
 *.key
-EOF
+deleted

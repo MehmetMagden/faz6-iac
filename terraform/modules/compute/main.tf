@@ -1,15 +1,12 @@
-# compute.tf
-
-# -- SECURITY GROUP --
+# compute/main.tf
 
 resource "aws_security_group" "app_sg" {
-    name            = "swisstask-sg"
-    description     = "SwissTask API Security Group"
-    vpc_id          = aws_vpc.swiss_vpc.id
+    name            = "swisstask-sg-${var.environment}"  # dev/prod
+    description     = "SwissTask Apı Security Group"
+    vpc_id          = var.vpc_id
 
-    # incoming traffic
     ingress {
-        description = "SSS Ansible"
+        description = "SSH - for Ansible"
         from_port   = 22
         to_port     = 22
         protocol    = "tcp"
@@ -24,7 +21,6 @@ resource "aws_security_group" "app_sg" {
         cidr_blocks = ["0.0.0.0/0"]
     }
 
-    # outgoing traffic
     egress {
         from_port   = 0
         to_port     = 0
@@ -33,19 +29,20 @@ resource "aws_security_group" "app_sg" {
     }
 
     tags = {
-        Name = "SwissTask-SG"
+        Name        = "SwissTask-SG"
+        Environment = var.environment
     }
 }
 
-# -- EC2 INSTANCE --
 resource "aws_instance" "app_server" {
     ami             = "ami-12345678"
-    instance_type   = "t2.micro"
+    instance_type   = var.instance_type
 
-    subnet_id           = aws_subnet.public_subnet.id
+    subnet_id               = var.subnet_id
     vpc_security_group_ids = [aws_security_group.app_sg.id]
 
     tags = {
-        Name = "SwissTask-Server"
+        Name            = "SwissTask-Server"
+        Environment = var.environment
     }
 }
