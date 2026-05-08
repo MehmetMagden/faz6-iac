@@ -18,3 +18,13 @@ ansible/vault/secrets.yml
 *.pem
 *.key
 deleted
+
+notes.txt
+*.pub
+ana_vm_key.pub
+id_rsa
+*.pem
+*.key
+.env
+secrets.yml
+*.retry
