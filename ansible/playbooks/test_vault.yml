@@ -1,0 +1,11 @@
+---
+- name: S.H.I.E.L.D. Voult Test
+  hosts: local
+
+  vars_files:
+    - ../vault/secrets.yml
+
+  tasks:
+    - name: Print Secret Vault Pass
+      debug:
+        msg: "Secret Vault Pass : {{ db_password }}"

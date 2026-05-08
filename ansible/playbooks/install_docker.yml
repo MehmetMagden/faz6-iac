@@ -1,0 +1,22 @@
+---
+
+- name: Docker Install
+  hosts: local
+  become: yes
+
+  tasks:
+    - name: Update APT paket lists
+      apt:
+        update_cache: yes
+        cache_valid_time: 360000
+    
+    - name: Install Docker 
+      apt:
+        name: docker.io
+        state: present
+
+    - name: Start Docker and enable
+      service:
+        name: docker
+        state: started
+        enabled: yes

@@ -1,0 +1,32 @@
+---
+- name: Install Nginx and Setup
+  hosts: local
+  become: yes
+  vars:
+    nginx_port: 8080
+    server_name: avengers.local
+    app_port: 5000
+
+  tasks:
+    - name: Install Nginx package
+      apt:
+        name: nginx
+        state: present
+
+    - name: Send dynamic Nginx Template
+      template:
+        src: ../templates/nginx.conf.j2
+        dest: /etc/nginx/sites-available/default
+      notify: restart Nginx
+
+    - name: Is Nginx started?
+      service: 
+        name: nginx
+        state: started
+        enabled: yes
+      
+  handlers:
+    - name: restart Nginx
+      service:
+        name: nginx
+        state: restarted
